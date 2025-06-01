@@ -3,7 +3,7 @@ available at https://darynakalinchuk.github.io/Seminar_Game/
 
 Is a game largely inpired by 
 - [Original Flappy Bird in JavaScript](https://github.com/CodeExplainedRepo/Original-Flappy-bird-JavaScript)
-- The great Mining Massive Data lecture slides by *Assoz. Prof. Dipl.-Ing. Dr.techn. Sebastian Tschiatschek, BSc.*
+- The great `Mining Massive Data` lecture slides by *Assoz. Prof. Dipl.-Ing. Dr.techn. Sebastian Tschiatschek, BSc.*
 - Me getting not a very good grade on the subject and wanting to do at least something extra, plus having to do a game for the seminar.
 
 ## 🎯 Game Purpose
@@ -32,7 +32,6 @@ You control a floating **student** character using mouse clicks to keep them in 
 
 ## 🧑‍🎓 Design
 
-The character image was generated using AI tools.
-The sound effects are taken from various open sources online.
+The character image was generated using AI tools. 
 ---
 
