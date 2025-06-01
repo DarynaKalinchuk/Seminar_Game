@@ -316,12 +316,12 @@ speedMenu.appendChild(speedSelect);
 document.body.appendChild(speedMenu);
 
 // LOAD SOUNDS
-const SCORE_S = new Audio("audio/sfx_point.wav");
-const FLAP = new Audio("audio/sfx_flap.wav");
-const SWOOSHING = new Audio("audio/sfx_swooshing.wav");
-const HIT = new Audio("audio/sfx_hit.wav");
-const DIE = new Audio("audio/sfx_die.wav");
-const WIN = new Audio("audio/sfx_win.wav");
+const SCORE_S = new Audio("sfx_point.wav");
+const FLAP = new Audio("sfx_flap.wav");
+const SWOOSHING = new Audio("sfx_swooshing.wav");
+const HIT = new Audio("sfx_hit.wav");
+const DIE = new Audio("sfx_die.wav");
+const WIN = new Audio("sfx_win.wav");
 
 // POPUP
 const popup = document.createElement("div");
