@@ -1,7 +1,7 @@
 # Flappy MMD Game
 available at https://darynakalinchuk.github.io/Seminar_Game/
 
-Is a game largely inpired by 
+Is a game inpired by 
 - [Original Flappy Bird in JavaScript](https://github.com/CodeExplainedRepo/Original-Flappy-bird-JavaScript)
 - The great `Mining Massive Data` lecture slides by *Assoz. Prof. Dipl.-Ing. Dr.techn. Sebastian Tschiatschek, BSc.*
 - Me getting not a very good grade on the subject and wanting to do at least something extra, plus having to do a game for the seminar.
