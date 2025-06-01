@@ -21,6 +21,7 @@ You control a floating **student** character using mouse clicks to keep them in 
   - 🐢 Slow
   - 🚲 Moderate
   - ⚡ God Mode
+- **Pausing** the game is an option.
 
 ## Scoring
 
