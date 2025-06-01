@@ -8,7 +8,7 @@ Is a game inpired by
 
 ## Game Purpose
 
-The game is designed to make learning lecture material more engaging and interactive. Currently, there are two levels based on the first two lectures (excluding the introductory one).
+The game is designed to make learning the MMD lecture material more engaging and interactive. Currently, there are two levels based on the first two lectures (excluding the introductory one).
 
 ## Gameplay
 
