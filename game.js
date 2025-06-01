@@ -18,8 +18,8 @@ const state = {
 let speedMode = 'moderate';
 const speedModes = {
     slow: 2,
-    moderate: 3,
-    god: 9
+    moderate: 4,
+    god: 7
 };
 
 // LOAD IMAGE
