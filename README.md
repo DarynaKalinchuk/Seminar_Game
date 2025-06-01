@@ -30,11 +30,11 @@ You control a floating **student** character using mouse clicks to keep them in 
 
 ---
 
-## 🧑‍🎓 Character Design
+## Character Design
 
 The character was generated using AI tools.
 
----
+The sound effects are taken from various open sources online.
 
-<sub>The character image was generated using AI tools. The sound effects are taken from various open sources online.</sub>
+---
 
