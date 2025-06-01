@@ -34,7 +34,7 @@ You control a floating **student** character using mouse clicks to keep them in 
 
 The character was generated using AI tools.
 
-The sound effects are taken from various open sources online.
+The sound effects were taken from various open sources online.
 
 ---
 
