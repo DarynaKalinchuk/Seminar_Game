@@ -24,7 +24,7 @@ const speedModes = {
 
 // LOAD IMAGE
 const birdImg = new Image();
-birdImg.src = "https://i.imgur.com/N4N3nHn.png"; 
+birdImg.src = "https://raw.githubusercontent.com/DarynaKalinchuk/Seminar_Game/refs/heads/main/game_image.png"; 
 
 // Lecture Selection
 const lectures = {
