@@ -23,7 +23,7 @@ You control a floating **student** character using mouse clicks to keep them in 
   - ⚡ God Mode
 - **Pausing** the game is an option.
 
-Before the game starts, the user is able to rerad the material from the lecture that would prepare him for the game test.
+Before the game starts, the user is able to read the material from the lecture that would prepare him for the game test.
 ## Scoring
 
 - **Score** = Number of questions answered
