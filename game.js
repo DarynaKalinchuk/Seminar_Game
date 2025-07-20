@@ -9,22 +9,23 @@ let paused = false;
 const state = {
     current: 0,
     menu: -1,
-    getReady: 0,
-    game: 1,
-    over: 2,
-    success: 3
+    preparation: 0.5, // New state between menu and getReady
+    getReady: 1,
+    game: 2,
+    over: 3,
+    success: 4
 };
 
 let speedMode = 'moderate';
 const speedModes = {
     slow: 1,
-    moderate: 2,
-    god: 4
+    moderate: 3,
+    god: 5
 };
 
 // LOAD IMAGE
 const birdImg = new Image();
-birdImg.src = "https://raw.githubusercontent.com/DarynaKalinchuk/Seminar_Game/refs/heads/main/game_image.png"; 
+birdImg.src = "https://i.imgur.com/N4N3nHn.png"; 
 
 // Lecture Selection
 const lectures = {
@@ -176,6 +177,46 @@ const lectures = {
     ]
 };
 
+const studyMaterials = {
+    Lecture2: {
+        title: "Lecture 2 - MapReduce",
+        content: [
+            "MapReduce is a programming model for processing large datasets in parallel across clusters.",
+            " ",
+            "Key Concepts:",
+            "- Map phase processes input data and emits key-value pairs",
+            "- Shuffle phase groups values by key",
+            "- Reduce phase processes each key's values",
+            " ",
+            "The system handles:",
+            "- Parallel execution",
+            "- Fault tolerance",
+            "- Load balancing",
+            " ",
+            "Common applications include word count, distributed grep, and web link graph processing."
+        ]
+    },
+    Lecture3: {
+        title: "Lecture 3 - Approximate Retrieval I",
+        content: [
+            "This lecture covers techniques for efficient similarity search in large datasets:",
+            " ",
+            "Key Concepts:",
+            "- Edit Distance: Measures how many edits needed to make strings identical",
+            "- Jaccard Similarity: Compares set similarity by intersection/union",
+            "- MinHash: Estimates Jaccard similarity efficiently",
+            "- LSH (Locality Sensitive Hashing): Hashes similar items to same buckets",
+            " ",
+            "Applications include:",
+            "- Near-duplicate detection",
+            "- Document similarity",
+            "- Recommendation systems",
+            " ",
+            "These techniques help avoid expensive pairwise comparisons."
+        ]
+    }
+};
+
 let currentLecture = null;
 
 // Pause Button UI
@@ -250,9 +291,14 @@ cvs.addEventListener("click", function (evt) {
             currentLecture = selectedLecture;
             challenges.labels = lectures[selectedLecture];
             score.totalQuestions = challenges.labels.length;
-            state.current = state.getReady;
+            state.current = state.preparation;
             return;
         }
+    }
+
+    if (state.current === state.preparation && isOKButtonClicked(clickX, clickY)) {
+        state.current = state.getReady;
+        return;
     }
 
     if (pauseBtn.isClicked(clickX, clickY)) {
@@ -396,9 +442,7 @@ popup.appendChild(buttonContainer);
 document.body.appendChild(popup);
 
 function showPopup(message, isSuccess = false) {
-    // Set styles based on success/failure
     if (isSuccess) {
-        // Victory styling - golden theme
         popup.style.border = "3px solid #f1c40f";
         popup.style.background = "linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,248,220,0.95) 100%)";
         popup.style.boxShadow = "0 0 25px rgba(241, 196, 15, 0.5)";
@@ -408,7 +452,6 @@ function showPopup(message, isSuccess = false) {
         menuButton.style.background = "linear-gradient(to bottom, #3498db, #2980b9)";
         WIN.play();
     } else {
-        // Regular styling - teal theme
         popup.style.border = "3px solid #16a085";
         popup.style.background = "linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(236, 240, 241,0.95) 100%)";
         popup.style.boxShadow = "0 0 25px rgba(22, 160, 133, 0.3)";
@@ -418,7 +461,6 @@ function showPopup(message, isSuccess = false) {
         menuButton.style.background = "linear-gradient(to bottom, #3498db, #2980b9)";
     }
     
-    // Set popup content with improved formatting
     popupText.innerHTML = `
         ${message}
         <br><br>
@@ -444,14 +486,13 @@ const objj = {
     y: 150,
     width: 60,
     height: 70,
-    gravity: 0.25,
-    jump: 4.6,
+    gravity: 0.06,  // Reduced from 0.25 to make falling slower
+    jump: 3.0,      // Reduced from 4.6 to match the slower gravity
     speed: 0,
     rotation: 0,
     invincibleFrames: 0,
     draw() {
         if (!birdImg.complete) {
-            // Fallback to circle if image isn't loaded yet
             ctx.fillStyle = "#f1c40f";
             ctx.beginPath();
             ctx.arc(this.x, this.y, 15, 0, Math.PI * 2);
@@ -463,7 +504,6 @@ const objj = {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         
-        // Draw the image centered
         ctx.drawImage(
             birdImg, 
             -this.width/2, 
@@ -474,7 +514,6 @@ const objj = {
         
         ctx.restore();
         
-        // Optional: Add shadow effect
         ctx.fillStyle = "rgba(0,0,0,0.2)";
         ctx.beginPath();
         ctx.ellipse(
@@ -571,7 +610,6 @@ const challenges = {
                         this.sets.splice(i, 1);
                         this.currentQuestionText = null;
                         
-                        // Check if all questions answered correctly
                         if (score.value === score.totalQuestions) {
                             state.current = state.success;
                             score.updateBestXP();
@@ -595,7 +633,7 @@ const challenges = {
             if (set.options[0].x + set.options[0].w < 0) {
                 this.skippedQuestions++;
                 score.xp -= 15;
-                DIE.play(); // Play die sound when XP is subtracted
+                DIE.play();
                 this.sets.splice(i, 1);
                 i--;
                 this.missedLastQuestion = true;
@@ -724,21 +762,17 @@ const score = {
 };
 
 function drawMenu() {
-    // Background
-    ctx.fillStyle = "#2c3e50"; // Dark blue-gray
+    ctx.fillStyle = "#2c3e50";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
 
-    // Title Shadow
     ctx.font = "bold 48px 'Segoe UI'";
     ctx.textAlign = "center";
     ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
     ctx.fillText("Select Lecture", cvs.width / 2 + 3, cvs.height / 2 - 97);
 
-    // Title Text
-    ctx.fillStyle = "#ecf0f1"; // Light gray
+    ctx.fillStyle = "#ecf0f1";
     ctx.fillText("Select Lecture", cvs.width / 2, cvs.height / 2 - 100);
 
-    // Optional divider line
     ctx.strokeStyle = "#7f8c8d";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -746,8 +780,38 @@ function drawMenu() {
     ctx.lineTo(cvs.width / 2 + 100, cvs.height / 2 - 50);
     ctx.stroke();
 
-    // Draw the lecture buttons
     lectureButtons.draw();
+}
+
+function drawPreparation() {
+    ctx.fillStyle = "#34495e";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+    ctx.fillStyle = "#ecf0f1";
+    ctx.font = "bold 28px 'Segoe UI'";
+    ctx.textAlign = "center";
+    ctx.fillText(studyMaterials[currentLecture].title, cvs.width/2, 50);
+
+    ctx.font = "16px 'Segoe UI'";
+    ctx.textAlign = "left";
+    const lineHeight = 24;
+    const startY = 100;
+    
+    studyMaterials[currentLecture].content.forEach((line, i) => {
+        ctx.fillText(line, 40, startY + i * lineHeight);
+    });
+
+    ctx.fillStyle = "#2ecc71";
+    ctx.roundRect(cvs.width/2 - 60, cvs.height - 80, 120, 50, 10);
+    ctx.fillStyle = "#ecf0f1";
+    ctx.font = "18px 'Segoe UI'";
+    ctx.textAlign = "center";
+    ctx.fillText("OK", cvs.width/2, cvs.height - 50);
+}
+
+function isOKButtonClicked(x, y) {
+    return x >= cvs.width/2 - 60 && x <= cvs.width/2 + 60 &&
+           y >= cvs.height - 80 && y <= cvs.height - 30;
 }
 
 function draw() {
@@ -756,18 +820,20 @@ function draw() {
         return;
     }
 
-    // Game background
+    if (state.current === state.preparation) {
+        drawPreparation();
+        return;
+    }
+
     ctx.fillStyle = "#3498db";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
 
-    // Game elements
     challenges.draw();
     fg.draw();
     objj.draw();
     score.draw();
     pauseBtn.draw();
 
-    // Pause overlay
     if (paused) {
         ctx.fillStyle = "rgba(0,0,0,0.5)";
         ctx.fillRect(0, 0, cvs.width, cvs.height);
@@ -785,7 +851,8 @@ function update() {
         paused ||
         state.current === state.over ||
         state.current === state.success ||
-        state.current === state.menu
+        state.current === state.menu ||
+        state.current === state.preparation
     )
         return;
 
